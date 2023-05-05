@@ -88,7 +88,7 @@ module.exports.login = (req, res, next) => {
         maxAge: 3600000,
         httpOnly: true,
       });
-      res.send({ message: 'Вы успешно вошли!', token });
+      res.send({ message: 'Вы успешно вошли!' });
     })
     .catch((err) => {
       next(err);

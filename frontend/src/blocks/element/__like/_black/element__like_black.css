@@ -1,0 +1,12 @@
+.element__like_black {
+    opacity: 1;
+    background: url(../../../../images/Union.png) center no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.element__like_black:hover {
+    opacity: 1;
+    transition: opacity;
+}

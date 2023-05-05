@@ -1,0 +1,15 @@
+.popup__figure-image {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    object-fit: contain;
+    max-height: 75vh;
+}
+
+@media screen and (max-width: 424.5px) {
+    .popup__figure-image {
+        min-height: 299px;
+        object-fit: cover;
+    }
+    
+}

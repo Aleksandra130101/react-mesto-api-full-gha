@@ -1,0 +1,8 @@
+.authorize__signature_link {
+    text-decoration: none;
+}
+
+.authorize__signature_link:hover {
+    opacity: 0.6;
+    transform: opacity 0.3s ease;
+}

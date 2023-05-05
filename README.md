@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP-адрес: 158.160.57.84.
+IP 158.160.57.84
 
 Frontend https://projectmesto.averianova.nomoredomains.monster
 

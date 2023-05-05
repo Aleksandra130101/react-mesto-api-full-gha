@@ -1,7 +1,0 @@
-.popup_opened {
-    margin: 0;
-    padding: 0;
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0.3s, opacity 0.3s linear;
-}

@@ -1,7 +1,6 @@
 class Api {
   constructor(config) {
     this._url = config.url;
-    this._headers = config.headers;
   }
 
   _checkResponse(res) {
@@ -12,31 +11,42 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
 
   }
-  
+
   _request(url, options) {
     return fetch(url, options).then(this._checkResponse)
   }
 
   getUserInfo() {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/users/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       credentials: 'include'
     })
   }
 
   getInitialCards() {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/cards`, {
-      headers: this._headers,
-      credentials: 'include'
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      // credentials: 'include'
     })
   }
 
 
   updateUserInfo(name, about) {
-    console.log("name=" + JSON.stringify(name));
-    console.log("about=" + JSON.stringify(about));
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/users/me`, {
-      method: 'PATCH', 
-      headers: this._headers,
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       credentials: 'include',
       body: JSON.stringify({
         name: name,
@@ -46,10 +56,13 @@ class Api {
   }
 
   updateAvatar(avatar) {
-    console.log("avatar = " + JSON.stringify(avatar))
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       credentials: 'include',
       body: JSON.stringify({
         avatar: avatar.avatar,
@@ -58,10 +71,13 @@ class Api {
   }
 
   addNewCard(user) {
-    console.log("user=" + JSON.stringify(user))
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       credentials: 'include',
       body: JSON.stringify({
         name: user.name,
@@ -71,35 +87,43 @@ class Api {
   }
 
   putLike(cardId) {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/cards/${cardId}/likes`, {
       method: 'PUT',
       credentials: 'include',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
     })
   }
 
   deleteLike(cardId) {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/cards/${cardId}/likes`, {
       method: 'DELETE',
       credentials: 'include',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
     })
   }
 
   deleteCard(id) {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/cards/${id}`, {
       method: "DELETE",
       credentials: 'include',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
     })
   }
 }
 
 export const api = new Api({
-  url: 'http://localhost:3001',
-  // url: 'https://api.projectmesto.averiano.nomoredomains.monster',
-  headers: {
-    authorization: '18c1f460-1209-46d8-b484-04ad7ddb3f47',
-    'Content-Type': 'application/json'
-  },
+  // url: 'http://localhost:3001',
+  url: 'https://api.projectmesto.averiano.nomoredomains.monster',
 });

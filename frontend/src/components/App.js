@@ -32,7 +32,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     tokenCheck();
     if (loggedIn) {
@@ -142,7 +142,6 @@ function App() {
   //постановка лайка
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
-    console.log(card._id);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
 
@@ -150,7 +149,6 @@ function App() {
     !isLiked
       ? (api.putLike(card._id, isLiked)
         .then((newCard) => {
-          console.log("put like map=" + JSON.stringify(newCard))
           setCards((state) =>
           state.map((c) => c._id === card._id ? newCard.card : c));
         })
@@ -160,7 +158,6 @@ function App() {
 
       : (api.deleteLike(card._id, !isLiked)
         .then((newCard) => {
-          console.log("delete like map=" + JSON.stringify(newCard))
           setCards((state) =>state.map((c) => c._id === card._id ? newCard.card : c));
         })
         .catch((err) => {
@@ -212,7 +209,6 @@ function App() {
   function handleAddPlace(card) {
     api.addNewCard(card)
       .then((card) => {
-        console.log(card);
         setCards([card, ...cards]);
       })
       .catch((err) => {

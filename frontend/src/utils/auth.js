@@ -1,7 +1,6 @@
 class AuthApi {
   constructor(config) {
     this._url = config.url;
-    this._headers = config.headers;
   }
 
   _checkResponse(res) {
@@ -11,16 +10,19 @@ class AuthApi {
 
     return Promise.reject(`Ошибка: ${res.status}`);
   }
-  
+
   _request(url, options) {
     return fetch(url, options).then(this._checkResponse)
   }
 
   register(email, password) {
+    const token = localStorage.getItem('token');
     return this._request(`${this._url}/signup`, {
       method: 'POST',
-      credentials: 'include',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify({
         email,
         password
@@ -32,8 +34,10 @@ class AuthApi {
   authorize(email, password) {
     return this._request(`${this._url}/signin`, {
       method: 'POST',
-      credentials: 'include',
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         email,
         password
@@ -43,7 +47,6 @@ class AuthApi {
   }
 
   getContent(token) {
-    //console.log("token2 = " + token);
     return this._request(`${this._url}/users/me`, {
       method: 'GET',
       credentials: 'include',
@@ -58,10 +61,6 @@ class AuthApi {
 }
 
 export const apiAuth = new AuthApi({
-  url: 'http://localhost:3001',
-  // url: 'https://api.projectmesto.averiano.nomoredomains.monster',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
+  // url: 'http://localhost:3001',
+  url: 'https://api.projectmesto.averiano.nomoredomains.monster',
 });

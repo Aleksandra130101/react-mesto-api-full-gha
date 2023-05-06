@@ -8,8 +8,7 @@ const Card = require('../models/card');
 // Get запрос возвращает карточки
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .populate('owner')
-    .populate('likes')
+    .populate(['owner', 'likes'])
     .then((card) => {
       res.send({ data: card });
     })
@@ -34,8 +33,7 @@ module.exports.createCard = (req, res, next) => {
 // Удаление карточки
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
-  .populate('owner')
-  .populate('likes')
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (!card) {
         next(new NotFoundError('Карточка по _id не найдена!!!'));
@@ -65,8 +63,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .populate('owner')
-    .populate('likes')
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (card) {
         res.send({ card });
@@ -90,6 +87,7 @@ module.exports.deleteLike = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (card) {
         res.send({ card });
